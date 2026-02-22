@@ -5,6 +5,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 
+// This imports the image explicitly so GitHub Pages doesn't lose the file path
+import carImg from "@/public/car.png"; 
+
 gsap.registerPlugin(ScrollTrigger);
 
 /* ─────────────────────────────────────────────────
@@ -203,8 +206,7 @@ export default function Home() {
         },
       });
 
-      // Fixed: Replaced the 3 phases with a single continuous linear animation.
-      // 'ease: "none"' ensures it doesn't slow down or speed up anywhere along the scroll.
+      // Continuous linear animation without pauses
       carTl.fromTo(
         carRef.current,
         { x: "-110vw" },
@@ -345,8 +347,6 @@ export default function Home() {
 
         {/* ════════════════════════════════
             HERO — pinned while car scrolls
-            NOTE: overflow is NOT hidden here
-            so the car can enter from outside
         ════════════════════════════════ */}
         <div
           ref={heroRef}
@@ -358,7 +358,6 @@ export default function Home() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            /* NO overflow:hidden — car must be visible outside bounds */
             background: "radial-gradient(ellipse 80% 55% at 50% 0%, #1d0900 0%, #080808 65%)",
           }}
         >
@@ -431,7 +430,7 @@ export default function Home() {
             animation: "pulseBar 2.8s ease-in-out infinite",
           }} />
 
-          {/* ── Statistics — directly below headline, tight spacing ── */}
+          {/* ── Statistics ── */}
           <div style={{
             position: "relative", zIndex: 2,
             display: "flex",
@@ -455,7 +454,6 @@ export default function Home() {
                   gap: "0.28rem",
                 }}
               >
-                {/* Big number */}
                 <span style={{
                   fontFamily: "'Bebas Neue', sans-serif",
                   fontSize: "clamp(2rem, 4vw, 2.8rem)",
@@ -466,9 +464,7 @@ export default function Home() {
                 }}>
                   {stat.value}
                 </span>
-                {/* Accent rule */}
                 <div style={{ width: "16px", height: "1px", background: "rgba(255,85,0,0.38)" }} />
-                {/* Label */}
                 <p style={{
                   fontSize: "0.56rem",
                   letterSpacing: "0.18em",
@@ -484,7 +480,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* ── CAR — absolutely positioned, centred horizontally ── */}
+          {/* ── CAR ── */}
           <div
             ref={carRef}
             style={{
@@ -500,7 +496,7 @@ export default function Home() {
             }}
           >
             <Image
-              src="/car.png"
+              src={carImg} /* Explicit import fixes GitHub Pages pathing */
               alt="Animated Car"
               width={900}
               height={450}
@@ -556,8 +552,6 @@ export default function Home() {
           </div>
 
         </div>
-        {/* END HERO */}
-
 
         {/* ════════════════════════════════
             SECTION 2 — Work in Action
