@@ -5,38 +5,28 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 
-// This imports the image explicitly so GitHub Pages doesn't lose the file path
+// grab the local image so github pages doesn't break the path
 import carImg from "@/public/car.png"; 
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─────────────────────────────────────────────────
-   ANIMATED SVG ILLUSTRATIONS — one per feature card
-   Each animates via CSS classes on the parent .feature-card:hover
-───────────────────────────────────────────────── */
+// --- SVG Components for the feature cards ---
 
-/* Card 01 — Rocket launch: rocket rises, flame flickers, stars twinkle */
+// Rocket icon
 const IllustrationRocket = () => (
   <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: "visible" }}>
-    {/* Stars */}
     <circle className="star s1" cx="8"  cy="12" r="1.2" fill="#ff5500" opacity="0.5"/>
     <circle className="star s2" cx="56" cy="18" r="1"   fill="#ff8800" opacity="0.4"/>
     <circle className="star s3" cx="14" cy="48" r="0.9" fill="#ff5500" opacity="0.35"/>
     <circle className="star s4" cx="52" cy="44" r="1.1" fill="#ffaa00" opacity="0.4"/>
-    {/* Rocket body */}
     <g className="rocket-body">
       <path d="M32 6 C26 14 24 26 24 34 L40 34 C40 26 38 14 32 6Z" fill="rgba(255,85,0,0.15)" stroke="#ff5500" strokeWidth="1.4"/>
-      {/* Nose tip */}
       <path d="M32 6 L29 14 L35 14 Z" fill="rgba(255,85,0,0.3)"/>
-      {/* Window */}
       <circle cx="32" cy="24" r="3.5" fill="none" stroke="#ff8800" strokeWidth="1.2"/>
       <circle cx="32" cy="24" r="1.5" fill="rgba(255,136,0,0.4)"/>
-      {/* Left fin */}
       <path d="M24 34 L18 42 L24 40 Z" fill="rgba(255,85,0,0.2)" stroke="#ff5500" strokeWidth="1.2"/>
-      {/* Right fin */}
       <path d="M40 34 L46 42 L40 40 Z" fill="rgba(255,85,0,0.2)" stroke="#ff5500" strokeWidth="1.2"/>
     </g>
-    {/* Flame */}
     <g className="flame">
       <path d="M28 40 Q30 48 32 52 Q34 48 36 40 Z" fill="rgba(255,85,0,0.7)"/>
       <path className="flame-inner" d="M30 40 Q31 46 32 49 Q33 46 34 40 Z" fill="rgba(255,200,0,0.8)"/>
@@ -44,26 +34,18 @@ const IllustrationRocket = () => (
   </svg>
 );
 
-/* Card 02 — Rotating diamond gem with light refraction lines */
+// Spinning gem icon
 const IllustrationGem = () => (
   <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: "visible" }}>
-    {/* Outer glow ring */}
     <circle className="gem-ring" cx="32" cy="34" r="22" stroke="rgba(255,85,0,0.12)" strokeWidth="1" fill="none"/>
     <circle className="gem-ring-2" cx="32" cy="34" r="27" stroke="rgba(255,85,0,0.06)" strokeWidth="1" fill="none"/>
-    {/* Gem shape */}
     <g className="gem-rotate">
-      {/* Top facets */}
       <polygon points="32,10 20,26 32,22 44,26" fill="rgba(255,100,0,0.18)" stroke="#ff5500" strokeWidth="1.3"/>
-      {/* Left facet */}
       <polygon points="20,26 32,22 32,52" fill="rgba(255,85,0,0.1)"  stroke="#ff6600" strokeWidth="1.3"/>
-      {/* Right facet */}
       <polygon points="44,26 32,22 32,52" fill="rgba(255,140,0,0.18)" stroke="#ff8800" strokeWidth="1.3"/>
-      {/* Bottom left */}
       <polygon points="20,26 32,52 10,36" fill="rgba(255,60,0,0.12)"  stroke="#ff5500" strokeWidth="1.1"/>
-      {/* Bottom right */}
       <polygon points="44,26 54,36 32,52" fill="rgba(255,120,0,0.15)" stroke="#ff7700" strokeWidth="1.1"/>
     </g>
-    {/* Light sparkle */}
     <g className="sparkle">
       <line x1="32" y1="4"  x2="32" y2="9"  stroke="#ff9900" strokeWidth="1.2" strokeLinecap="round"/>
       <line x1="32" y1="59" x2="32" y2="64" stroke="#ff9900" strokeWidth="1.2" strokeLinecap="round"/>
@@ -73,41 +55,18 @@ const IllustrationGem = () => (
   </svg>
 );
 
-/* Card 03 — Shield with animated pulse rings and a checkmark draw */
+// Shield icon with drawing checkmark
 const IllustrationShield = () => (
   <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: "visible" }}>
-    {/* Pulse rings */}
     <circle className="pulse-ring r1" cx="32" cy="34" r="26" stroke="rgba(255,85,0,0.2)"  strokeWidth="1" fill="none"/>
     <circle className="pulse-ring r2" cx="32" cy="34" r="20" stroke="rgba(255,85,0,0.15)" strokeWidth="1" fill="none"/>
-    {/* Shield body */}
-    <path
-      className="shield-body"
-      d="M32 8 L52 16 L52 32 C52 44 42 54 32 58 C22 54 12 44 12 32 L12 16 Z"
-      fill="rgba(255,85,0,0.08)"
-      stroke="#ff5500"
-      strokeWidth="1.5"
-    />
-    {/* Inner shield detail */}
-    <path
-      d="M32 14 L46 20 L46 32 C46 41 39 49 32 52 C25 49 18 41 18 32 L18 20 Z"
-      fill="rgba(255,85,0,0.05)"
-      stroke="rgba(255,85,0,0.3)"
-      strokeWidth="0.8"
-    />
-    {/* Checkmark — drawn via stroke-dashoffset animation */}
-    <path
-      className="check-path"
-      d="M22 33 L29 41 L42 26"
-      stroke="#ff6600"
-      strokeWidth="2.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
+    <path className="shield-body" d="M32 8 L52 16 L52 32 C52 44 42 54 32 58 C22 54 12 44 12 32 L12 16 Z" fill="rgba(255,85,0,0.08)" stroke="#ff5500" strokeWidth="1.5" />
+    <path d="M32 14 L46 20 L46 32 C46 41 39 49 32 52 C25 49 18 41 18 32 L18 20 Z" fill="rgba(255,85,0,0.05)" stroke="rgba(255,85,0,0.3)" strokeWidth="0.8" />
+    <path className="check-path" d="M22 33 L29 41 L42 26" stroke="#ff6600" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
   </svg>
 );
 
-/* Arrow icon unchanged — used for "Learn more" */
+// simple arrow for the buttons
 const IconArrow = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <path d="M5 12h14M12 5l7 7-7 7" />
@@ -115,6 +74,7 @@ const IconArrow = () => (
 );
 
 export default function Home() {
+  // refs for GSAP
   const heroRef       = useRef(null);
   const lettersRef    = useRef([]);
   const statsRef      = useRef([]);
@@ -124,8 +84,9 @@ export default function Home() {
   const section2Ref   = useRef(null);
 
   const headline = "WELCOME ITZFIZZ";
-  const letters  = headline.split("");
+  const letters  = headline.split(""); // split to animate letter by letter
 
+  // dummy data for the hero stats
   const statsData = [
     { value: "58%", description: "Increase in pick-up point use" },
     { value: "23%", description: "Decreased customer phone calls" },
@@ -155,22 +116,22 @@ export default function Home() {
   ];
 
   useEffect(() => {
+    // filter out any null refs just in case
     const validLetters = lettersRef.current.filter(Boolean);
     const validStats   = statsRef.current.filter(Boolean);
 
+    // scope everything to heroRef so we don't accidentally animate other pages
     const ctx = gsap.context(() => {
 
-      /* ── 1. LOAD TIMELINE ── */
+      // intro animations on load
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // Letter-by-letter headline flip-in
       tl.fromTo(
         validLetters,
         { opacity: 0, y: 50, rotateX: -90, transformOrigin: "top center" },
         { opacity: 1, y: 0, rotateX: 0, duration: 0.65, stagger: 0.042 }
       );
 
-      // Subtitle
       tl.fromTo(
         subtitleRef.current,
         { opacity: 0, y: 16 },
@@ -178,7 +139,7 @@ export default function Home() {
         "-=0.15"
       );
 
-      // Stats one by one — starts right after subtitle, no long wait
+      // stagger the stats in
       tl.fromTo(
         validStats,
         { opacity: 0, y: 22, scale: 0.93 },
@@ -186,7 +147,6 @@ export default function Home() {
         "-=0.25"
       );
 
-      // Scroll hint
       tl.fromTo(
         scrollHintRef.current,
         { opacity: 0 },
@@ -194,7 +154,9 @@ export default function Home() {
         "+=0.2"
       );
 
-      /* ── 2. CAR SCROLL: Continuous Smooth Drive ── */
+      // --- scroll triggers ---
+
+      // continuous linear scroll for the car (prevents the pausing bug)
       const carTl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
@@ -206,14 +168,13 @@ export default function Home() {
         },
       });
 
-      // Continuous linear animation without pauses
       carTl.fromTo(
         carRef.current,
         { x: "-110vw" },
         { x: "150vw", ease: "none" }
       );
 
-      /* ── 3. SECTION 2 REVEALS ── */
+      // section 2 animations
       const cards = section2Ref.current?.querySelectorAll(".feature-card");
       if (cards?.length) {
         gsap.fromTo(
@@ -240,6 +201,7 @@ export default function Home() {
 
     }, heroRef);
 
+    // cleanup on unmount
     return () => ctx.revert();
   }, []);
 
@@ -259,7 +221,6 @@ export default function Home() {
           50%       { opacity: 0.55; }
         }
 
-        /* Feature card hovers */
         .feature-card { transition: background 0.3s ease; }
         .feature-card:hover { background: rgba(255,255,255,0.038) !important; }
         .feature-card:hover .c-arrow {
@@ -268,7 +229,7 @@ export default function Home() {
         }
         .c-arrow { transition: transform 0.28s ease, opacity 0.28s ease; }
 
-        /* ── ROCKET (card 01) ── */
+        /* rocket card animations */
         @keyframes rocketFloat {
           0%, 100% { transform: translateY(0); }
           50%       { transform: translateY(-5px); }
@@ -294,7 +255,7 @@ export default function Home() {
         .feature-card:hover .s3 { animation: starPulse 0.9s 0.35s ease-in-out infinite; }
         .feature-card:hover .s4 { animation: starPulse 1.5s 0.1s  ease-in-out infinite; }
 
-        /* ── GEM (card 02) ── */
+        /* gem card animations */
         @keyframes gemSpin {
           from { transform: rotate(0deg);   }
           to   { transform: rotate(360deg); }
@@ -313,7 +274,7 @@ export default function Home() {
         .feature-card:hover .gem-ring-2  { animation: ringExpand 1.8s 0.4s ease-in-out infinite; transform-origin: 32px 34px; }
         .feature-card:hover .sparkle     { animation: sparkleFlash 1.2s ease-in-out infinite; transform-origin: 32px 34px; }
 
-        /* ── SHIELD (card 03) ── */
+        /* shield card animations */
         @keyframes shieldPulse {
           0%   { transform: scale(1);    opacity: 0.2; }
           50%  { transform: scale(1.15); opacity: 0.5; }
@@ -336,7 +297,7 @@ export default function Home() {
         }
         .feature-card:hover .shield-body { animation: shieldGlow 2s ease-in-out infinite; }
 
-        /* CTA hover */
+        /* button hover states */
         .btn-primary  { transition: box-shadow 0.3s ease, transform 0.25s ease; }
         .btn-primary:hover  { box-shadow: 0 0 44px rgba(255,85,0,0.5) !important; transform: translateY(-2px); }
         .btn-ghost   { transition: border-color 0.3s ease, color 0.3s ease; }
@@ -345,9 +306,7 @@ export default function Home() {
 
       <div style={{ background: "#080808", color: "#f0ede8", overflowX: "hidden", fontFamily: "'DM Sans', sans-serif" }}>
 
-        {/* ════════════════════════════════
-            HERO — pinned while car scrolls
-        ════════════════════════════════ */}
+        {/* Hero Section */}
         <div
           ref={heroRef}
           style={{
@@ -361,7 +320,7 @@ export default function Home() {
             background: "radial-gradient(ellipse 80% 55% at 50% 0%, #1d0900 0%, #080808 65%)",
           }}
         >
-          {/* Grid texture */}
+          {/* subtle background grid */}
           <div style={{
             position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
             backgroundImage:
@@ -370,7 +329,7 @@ export default function Home() {
             backgroundSize: "68px 68px",
           }} />
 
-          {/* ── Headline ── */}
+          {/* main title */}
           <h1
             aria-label={headline}
             style={{
@@ -404,7 +363,6 @@ export default function Home() {
             ))}
           </h1>
 
-          {/* ── Subtitle ── */}
           <p
             ref={subtitleRef}
             style={{
@@ -421,7 +379,7 @@ export default function Home() {
             Premium Web Experiences
           </p>
 
-          {/* ── Divider pulse bar ── */}
+          {/* little glowing divider */}
           <div style={{
             position: "relative", zIndex: 2,
             width: "1px", height: "28px",
@@ -430,7 +388,7 @@ export default function Home() {
             animation: "pulseBar 2.8s ease-in-out infinite",
           }} />
 
-          {/* ── Statistics ── */}
+          {/* hero stats */}
           <div style={{
             position: "relative", zIndex: 2,
             display: "flex",
@@ -480,14 +438,14 @@ export default function Home() {
             ))}
           </div>
 
-          {/* ── CAR ── */}
+          {/* scrolling car container */}
           <div
             ref={carRef}
             style={{
               position: "absolute",
               bottom: "12%",
               left: "50%",
-              transform: "translateX(-110vw)",  /* initial: off-screen left */
+              transform: "translateX(-110vw)", // start off-screen to the left
               width: "clamp(280px, 44vw, 560px)",
               zIndex: 3,
               pointerEvents: "none",
@@ -496,7 +454,7 @@ export default function Home() {
             }}
           >
             <Image
-              src={carImg} /* Explicit import fixes GitHub Pages pathing */
+              src={carImg} 
               alt="Animated Car"
               width={900}
               height={450}
@@ -505,7 +463,7 @@ export default function Home() {
             />
           </div>
 
-          {/* Ground line under the car */}
+          {/* fake ground line for the car to drive on */}
           <div style={{
             position: "absolute",
             bottom: "calc(12% - 2px)",
@@ -519,7 +477,7 @@ export default function Home() {
               "linear-gradient(90deg, transparent, rgba(255,85,0,0.2) 20%, rgba(255,85,0,0.2) 80%, transparent)",
           }} />
 
-          {/* Scroll hint */}
+          {/* bouncing scroll hint at the bottom */}
           <div
             ref={scrollHintRef}
             style={{
@@ -553,9 +511,7 @@ export default function Home() {
 
         </div>
 
-        {/* ════════════════════════════════
-            SECTION 2 — Work in Action
-        ════════════════════════════════ */}
+        {/* Features Section */}
         <section
           ref={section2Ref}
           style={{
@@ -570,9 +526,7 @@ export default function Home() {
           }}
         >
 
-          {/* Section header */}
           <div style={{ textAlign: "center", maxWidth: "600px", marginBottom: "5rem" }}>
-
             <p className="hdr" style={{
               fontSize: "0.58rem",
               letterSpacing: "0.5em",
@@ -616,7 +570,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Feature cards */}
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(268px, 1fr))",
@@ -639,7 +592,6 @@ export default function Home() {
                   flexDirection: "column",
                 }}
               >
-                {/* Card number */}
                 <span style={{
                   fontFamily: "'Bebas Neue', sans-serif",
                   fontSize: "0.65rem",
@@ -650,7 +602,6 @@ export default function Home() {
                   {f.number}
                 </span>
 
-                {/* Animated illustration */}
                 <div className="c-illus" style={{
                   marginBottom: "1.8rem",
                   display: "flex",
@@ -660,7 +611,6 @@ export default function Home() {
                   <f.Illustration />
                 </div>
 
-                {/* Title */}
                 <h3 style={{
                   fontFamily: "'Bebas Neue', sans-serif",
                   fontSize: "1.45rem",
@@ -672,7 +622,6 @@ export default function Home() {
                   {f.title}
                 </h3>
 
-                {/* Accent rule */}
                 <div style={{
                   width: "20px",
                   height: "1px",
@@ -680,7 +629,6 @@ export default function Home() {
                   marginBottom: "1.2rem",
                 }} />
 
-                {/* Body */}
                 <p style={{
                   fontSize: "0.84rem",
                   lineHeight: 1.85,
@@ -693,7 +641,6 @@ export default function Home() {
                   {f.body}
                 </p>
 
-                {/* Learn more */}
                 <div style={{
                   display: "flex",
                   alignItems: "center",
@@ -712,7 +659,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Metrics strip */}
+          {/* extra stats strip at the bottom of the section */}
           <div style={{
             display: "flex",
             flexWrap: "wrap",
@@ -755,7 +702,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* CTAs */}
           <div style={{
             marginTop: "4.5rem",
             display: "flex",
@@ -799,7 +745,6 @@ export default function Home() {
 
         </section>
 
-        {/* Footer */}
         <footer style={{
           padding: "1.6rem 2rem",
           borderTop: "1px solid rgba(255,255,255,0.04)",
